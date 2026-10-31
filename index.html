@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS RDS Visualizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div><strong>RDS Visual</strong><span class="byline">AWS database architecture · Interactive learning</span></div>
+  <div class="top-actions">
+    <span class="pill">AWS Architecture</span>
+    <button id="themeBtn" class="theme-btn">Toggle theme</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="sidebar">
+    <h1>Build the database,<br>one step at a time.</h1>
+    <p class="intro">Follow the setup of a secure, highly available Amazon RDS database inside a VPC.</p>
+    <div id="steps" class="steps"></div>
+    <div class="side-note"><b>Learning tip</b><br>Select each step to see how the AWS components fit together. This is a conceptual diagram, not a live AWS deployment.</div>
+  </aside>
+
+  <section class="workspace">
+    <div class="canvas-head">
+      <div><span class="eyebrow">ARCHITECTURE CANVAS</span><h2 id="canvasTitle">VPC and network boundary</h2></div>
+      <span id="stepCount" class="step-count">STEP 1 / 8</span>
+    </div>
+    <div class="diagram-wrap">
+      <div class="region">
+        <div class="region-label">AWS REGION · eu-north-1 (example)</div>
+        <div class="vpc">
+          <div class="vpc-label"><b>VPC · 10.0.0.0/16</b><span>Private network boundary</span></div>
+          <div class="az-grid">
+            <div class="az" id="azA"><div class="az-label">Availability Zone A · eu-north-1a</div><div class="subnet public" id="publicA"><b>Public subnet</b><small>10.0.1.0/24</small><div class="node internet" data-node="igw">Internet Gateway</div></div><div class="subnet private" id="privateA"><b>Private DB subnet A</b><small>10.0.11.0/24</small><div class="node db" data-node="db">RDS database</div></div></div>
+            <div class="az" id="azB"><div class="az-label">Availability Zone B · eu-north-1b</div><div class="subnet public" id="publicB"><b>Public subnet</b><small>10.0.2.0/24</small><div class="node app" data-node="app">Application server</div></div><div class="subnet private" id="privateB"><b>Private DB subnet B</b><small>10.0.12.0/24</small><div class="node standby" data-node="standby">Standby DB</div></div></div>
+          </div>
+          <div class="security" id="security"><span class="shield">◆</span><span><b>RDS security group</b><small>Inbound: TCP 3306 / 5432 from approved app security group only</small></span></div>
+          <div class="backup" id="backup"><span>☁</span><b>Automated backups & snapshots</b><small>Point-in-time recovery · retention configurable</small></div>
+        </div>
+      </div>
+      <svg class="connectors" viewBox="0 0 900 550" preserveAspectRatio="none" aria-hidden="true">
+        <path id="lineAppDb" d="M650 255 C570 255 520 350 390 350" />
+        <path id="lineDbStandby" d="M390 350 C450 450 560 450 650 350" />
+      </svg>
+      <div class="legend"><span><i class="dot active-dot"></i>Highlighted component</span><span><i class="dot"></i>Other components</span><span>🔒 Private database access</span></div>
+    </div>
+    <div class="details">
+      <div class="detail-icon" id="detailIcon">🌐</div>
+      <div class="detail-copy"><span class="eyebrow">WHAT THIS STEP DOES</span><h3 id="detailTitle">Create a VPC</h3><p id="detailText">A VPC gives your AWS resources an isolated network. The CIDR range 10.0.0.0/16 provides private IP space for subnets and database resources.</p></div>
+    </div>
+    <div class="navigation"><button id="prevBtn" class="secondary" disabled>← Previous</button><button id="nextBtn" class="primary">Next step →</button></div>
+  </section>
+</main>
+<footer>Educational AWS RDS architecture visualizer · No AWS resources are created by this demo.</footer>
+<script src="script.js"></script>
+</body>
+</html>
